@@ -86,7 +86,7 @@ public class ServidorSocketMensajes implements Runnable {
                 
                 // Logs
                 panel.getLogDeEnvios().append(
-                		"<<Servidor>> Mensaje enviado a las " + LocalDateTime.now() + ".\n");
+                		"<<Servidor>> Mensaje enviado a las " + LocalDateTime.now() + ".\n\n");
 
             } // while
 

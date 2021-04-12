@@ -14,7 +14,7 @@ public class PanelPrincipal extends JPanel{
 
 		setLayout(new BorderLayout());
 
-		logDeEnvios = new JTextArea("<<Servidor>> Servidor de Betterzon encendido.\n");
+		logDeEnvios = new JTextArea("<<Servidor>> Servidor de Betterzon encendido.\n\n");
 		add(logDeEnvios);
 
 	} // Constructor
