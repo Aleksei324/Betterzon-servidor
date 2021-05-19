@@ -1,40 +1,31 @@
 package clases;
 
 import java.io.Serializable;
-import javax.swing.text.Document;
 
 public class EmpaquetadoDeMensaje implements Serializable{
 
     // Atributos
-    private String texto, destinatarioIP;
-    private Document multimedia;
+    private byte[] texto, destinatarioIP, multimedia;
 
+    
+	public EmpaquetadoDeMensaje(byte[] destinatarioIP, byte[] texto, byte[] multimedia) {
 
-    public EmpaquetadoDeMensaje(Document multimedia, String destinatarioIP) {
-
-		this.multimedia = multimedia;
 		this.destinatarioIP = destinatarioIP;
-
-	} // Constructor
-
-
-	public EmpaquetadoDeMensaje(String texto, String destinatarioIP) {
-
 		this.texto = texto;
-		this.destinatarioIP = destinatarioIP;
+		this.multimedia = multimedia;
 
 	} // Constructor
 
 
-	public String getTexto() {
-        return texto;
-    }
+	public byte[] getTexto() {
+		return texto;
+	}
 
-	public String getDestinatarioIP() {
+	public byte[] getDestinatarioIP() {
 		return destinatarioIP;
 	}
 
-	public Document getMultimedia() {
+	public byte[] getMultimedia() {
 		return multimedia;
 	}
 

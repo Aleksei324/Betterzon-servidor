@@ -1,46 +1,28 @@
 package clases;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalDateTime;
-import gui.FramePrincipal;
-import gui.PanelPrincipal;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
-public class ServidorSocketMensajes implements Runnable {
-    
-    // Atributos
+import gui.PanelPrincipal;
+
+public class ServidorSocketLlaves implements Runnable{
+	
+	// Atributos
 	private static PanelPrincipal panel = new PanelPrincipal();
 	private static String llave = "Aqui colocas tu llave para decifrar las IPs";
-	private static int puerto = 1111;
-    private EmpaquetadoDeMensaje mensaje;
+	private static int puerto = 2222;
+    private EmpaquetadoDeLlaves paqueteLlaves;
     private ServerSocket servidorDeEscucha;
     private Socket socketLocal;
     private Socket socketDeEnvio;
     private ObjectInputStream entrada;
     private ObjectOutputStream salida;
 
-
-    public static void main(String[] args) {
-
-		// Iniciar el GUI
-		FramePrincipal frame1 = new FramePrincipal();
-		frame1.add(panel);
-		frame1.setVisible(true);
-		
-		// Para que el servidor pueda recibir mensajes
-		ServidorSocketMensajes servidorM = new ServidorSocketMensajes();
-		servidorM.inicializarHilo();
-		
-		// Para que el servidor pueda recibir mensajes
-		ServidorSocketLlaves servidorL = new ServidorSocketLlaves();
-		servidorL.inicializarHilo();
-
-	} // Main()
-
-
-    public void inicializarHilo() {
+    
+	public void inicializarHilo() {
 
     	Thread hiloParaServidor = new Thread(this);
     	hiloParaServidor.start();
@@ -65,27 +47,25 @@ public class ServidorSocketMensajes implements Runnable {
                 entrada = new ObjectInputStream(socketLocal.getInputStream());
 
                 // Guarda el objeto que obtenga como EmpaquetadoDeMensaje
-                mensaje = (EmpaquetadoDeMensaje) entrada.readObject();
+                paqueteLlaves = (EmpaquetadoDeLlaves) entrada.readObject();
                 
                 entrada.close();
                 socketLocal.close();
                 
                 // Logs
                 panel.getLogDeEnvios().append(
-                		"<<Servidor>> Mensaje recibido a las " + LocalDateTime.now() + ".\n");
+                		"<<Servidor>> Nuevo chat detectado a las " + LocalDateTime.now() + ".\n");
 
-                // Guarda el mensaje en la base de datos...
-
-                // Crea un nuevo socket para enviar el mensaje al destinatario
+                // Crea un nuevo socket para enviar las llaves al destinatario
                 socketDeEnvio = new Socket(
                 		EncriptadoAES.decifrar(
-                		mensaje.getDestinatarioIP(), llave), puerto + 10);
+                		paqueteLlaves.getDestinatarioIP(), llave), puerto + 10);
                 
                 // El flujo de datos de salida va a circular por el puente virtual del socket
                 salida = new ObjectOutputStream(socketDeEnvio.getOutputStream());
                 
                 // Se envia
-                salida.writeObject(mensaje);
+                salida.writeObject(paqueteLlaves);
 
                 salida.close();
                 socketDeEnvio.close();
@@ -93,7 +73,7 @@ public class ServidorSocketMensajes implements Runnable {
                 
                 // Logs
                 panel.getLogDeEnvios().append(
-                		"<<Servidor>> Mensaje enviado a las " + LocalDateTime.now() + ".\n\n");
+                		"<<Servidor>> Llaves sincronizadas a las " + LocalDateTime.now() + ".\n\n");
 
             } // while
 
@@ -102,5 +82,5 @@ public class ServidorSocketMensajes implements Runnable {
         }
 
     } // run()
-
-} // Class
+	
+} // class
