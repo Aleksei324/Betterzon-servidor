@@ -5,15 +5,14 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalDateTime;
-
 import gui.PanelPrincipal;
 
 public class ServidorSocketLlaves implements Runnable{
 	
 	// Atributos
 	private static PanelPrincipal panel = new PanelPrincipal();
-	private static String llave = "Aqui colocas tu llave para decifrar las IPs";
-	private static int puerto = 2222;
+	private static String llave = "Escribe tu contraseña para la llave aqui"; // TODO: 2021-06-06 this
+	private static int puerto = 2222; // TODO: 2021-06-06 Ajusta los puertos
     private EmpaquetadoDeLlaves paqueteLlaves;
     private ServerSocket servidorDeEscucha;
     private Socket socketLocal;

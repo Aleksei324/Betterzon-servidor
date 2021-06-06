@@ -12,8 +12,8 @@ public class ServidorSocketMensajes implements Runnable {
     
     // Atributos
 	private static PanelPrincipal panel = new PanelPrincipal();
-	private static String llave = "Aqui colocas tu llave para decifrar las IPs";
-	private static int puerto = 1111;
+	private static String llave = "Escribe tu contraseña para la llave aqui"; // TODO: 2021-06-06 this
+	private static int puerto = 1111; // TODO: 2021-06-06 Ajusta los puertos
     private EmpaquetadoDeMensaje mensaje;
     private ServerSocket servidorDeEscucha;
     private Socket socketLocal;
